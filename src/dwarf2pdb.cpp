@@ -928,14 +928,15 @@ void CV2PDB::getDWARFSubrangeInfo(DWARF_InfoData& subrangeid, DWARF_CompilationU
 {
 	// In case of error, return plausible defaults
 	basetype = T_INT4;
-	lowerBound = 0;
+	lowerBound = currentDefaultLowerBound;
 	upperBound = 0;
 
 	if (!cu || subrangeid.tag != DW_TAG_subrange_type)
 		return;
 
 	basetype = T_INT4; // TODO: somehow use subrangeid.type
-	lowerBound = subrangeid.lower_bound;
+	if (subrangeid.has_lower_bound)
+		lowerBound = subrangeid.lower_bound;
 	upperBound = subrangeid.upper_bound;
 }
 
